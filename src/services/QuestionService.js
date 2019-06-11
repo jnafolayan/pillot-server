@@ -11,7 +11,7 @@ export default class QuestionService {
       .then(doc => refId);
   }
 
-  static deleteQuestion(refId) {
+  static deleteQuestion({ refId }) {
     return Question.deleteOne({ refId });
   }
 

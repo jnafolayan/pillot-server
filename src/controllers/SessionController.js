@@ -3,8 +3,29 @@ import SessionService from '../services/SessionService';
 import QuestionService from '../services/QuestionService';
 
 export default class SessionController {
+  static createSession(req, res, next) {
+    SessionService.createSession(req.body)
+      .then(sendResponse)
+      .catch(next);
+
+    function sendResponse(session) {
+      res.status(201)
+        .json({
+          status: 201,
+          data: {
+            session
+          }
+        });
+    }
+  
+  }
+
   static startSession(req, res, next) {
-    SessionService.startSession(req.body)
+    const dto = {
+      sessionId: req.params.sessionId
+    };
+
+    SessionService.startSession(dto)
       .then(sendResponse)
       .catch(next);
 
