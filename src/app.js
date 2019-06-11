@@ -1,8 +1,9 @@
 import express from 'express';
 
+import log from './lib/log';
+
 import * as config from './config';
 import initLoaders from './loaders';
-import log from './lib/log';
 
 const app = express();
 
