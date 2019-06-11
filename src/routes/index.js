@@ -4,12 +4,12 @@ import userRouter from './userRouter';
 import quizRouter from './quizRouter';
 import sessionRouter from './sessionRouter';
 
-export default function routes(app) {
+export default function routes() {
   const router = Router();
   
-  app.use('/users', userRouter);
-  app.use('/quiz', quizRouter);
-  app.use('/sessions', sessionRouter);
+  router.use('/users', userRouter);
+  router.use('/quiz', quizRouter);
+  router.use('/sessions', sessionRouter);
 
   return router;
 }
