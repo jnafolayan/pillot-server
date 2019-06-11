@@ -32,7 +32,7 @@ export default class QuizController {
   }
 
   static getAllQuizzes(req, res, next) {
-    return Quiz.find()
+    return Quiz.find({})
       .select('refId title description')
       .exec()
       .then(sendResponse)
@@ -48,7 +48,7 @@ export default class QuizController {
   }
 
   static getQuiz(req, res, next) {
-    return Quiz.findOne({ refId: req.body.refId })
+    return Quiz.findOne({ refId: req.body.quizId })
       .select('refId title description')
       .exec()
       .then(sendResponse)
