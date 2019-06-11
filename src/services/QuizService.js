@@ -7,7 +7,7 @@ export default class QuizService {
   static createQuiz({ title, description, questions }) {
     const refId = uuidv1().split('-').shift();
     
-    return Quiz.create({ text, description, questions, refId })
+    return Quiz.create({ title, description, questions, refId })
       .then(doc => refId);
   }
 
