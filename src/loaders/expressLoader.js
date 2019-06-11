@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import routes from '../routes';
 
 export default async function loadExpressPackages(app, config) {
-  app.use(bodyParser);
+  app.use(bodyParser.json());
 
   app.use(routes());
 }
