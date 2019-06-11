@@ -48,7 +48,7 @@ export default class QuizController {
   }
 
   static getQuiz(req, res, next) {
-    return Quiz.findOne({ refId: req.body.quizId })
+    return Quiz.findOne({ refId: req.params.quizId })
       .select('refId title description')
       .exec()
       .then(sendResponse)
