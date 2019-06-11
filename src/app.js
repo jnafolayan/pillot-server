@@ -2,7 +2,7 @@ import express from 'express';
 
 import * as config from './config';
 import initLoaders from './loaders';
-import log from './log';
+import log from './lib/log';
 
 const app = express();
 

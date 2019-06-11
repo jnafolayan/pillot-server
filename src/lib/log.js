@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 const log = {
   debug(msg) {
     print('blue', msg);
