@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const QuestionSchema = new mongoose.Schema({
+  refId: { type: String, required: true },
   type: { type: String, required: false },
   text: { type: String, required: true },
   options: [{ 
