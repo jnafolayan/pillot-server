@@ -1,9 +1,15 @@
 import express from 'express';
 
-import loaders from './loaders';
+import * as config from './config';
+import initLoaders from './loaders';
+import log from './log';
 
 const app = express();
 
-function startServer() {
+startServer();
 
+async function startServer() {
+  await initLoaders(app, config);
+
+  app.listen(config.port, () => log.debug(`Server running on port ${config.port}`));
 }
