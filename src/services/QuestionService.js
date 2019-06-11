@@ -13,5 +13,25 @@ export default class QuestionService {
 
   static deleteQuestion(refId) {
     return Question.deleteOne({ refId });
-  } 
+  }
+
+  static getQuestion({ questionId }) {
+    return Question.findOne({ questionId })
+      .exec()
+      .then(extractQuestion);
+
+    function extractQuestion({ questions }) {
+      const question = questions[questionId];
+      return {
+        refId: question.refId,
+        text: question.text,
+        options: question.options
+      };
+    }
+  }
+
+  static verifyAnswer({ quizId, questionId, answer }) {
+    return QuizService.getQuestion({ quizId, questionId })
+      .then(get)
+  }
 }

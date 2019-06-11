@@ -13,5 +13,5 @@ export default class QuizService {
 
   static deleteQuiz(refId) {
     return Quiz.deleteOne({ refId });
-  } 
+  }
 }
