@@ -19,7 +19,7 @@ export default class QuizController {
   }
 
   static deleteQuiz(req, res, next) {
-    return QuizService.deleteQuiz(req.body)
+    return QuizService.deleteQuiz(req.params)
       .then(sendResponse)
       .catch(next);
 
