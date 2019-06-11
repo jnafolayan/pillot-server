@@ -2,7 +2,7 @@ import User from '../models/User';
 import UserService from '../services/UserService';
 
 export default class UserController {
-  signupUser(req, res, next) {
+  static signupUser(req, res, next) {
     UserService.createUser(req.body)
       .then(sendResponse)
       .catch(next);
@@ -18,7 +18,7 @@ export default class UserController {
     }
   }
 
-  loginUser(req, res, next) {
+  static loginUser(req, res, next) {
     UserService.loginUser(req.body)
       .then(sendResponse)
       .catch(next);
