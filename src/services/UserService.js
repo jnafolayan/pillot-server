@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 
@@ -24,7 +25,8 @@ export default class UserService {
   static loginUser({ username, password }) {
     return User.findOne({ username })
       .catch(checkIfUserExists)
-      .then(verifyPassword);
+      .then(verifyPassword)
+      .then(generateToken);
 
     function checkIfUserExists(userDoc) {
       if (!userDoc)
@@ -36,7 +38,14 @@ export default class UserService {
         .then(result => {
           if (!result)
             throw createError(401, 'Incorrect password');
+          else
+            return userDoc;
         });
+    }
+
+    function generateToken({ _id }) {
+      const token = jwt.sign({ id: _id }, config.jwtSecret, { expiresIn: '7d' });
+      return token;
     }
   }
 }
