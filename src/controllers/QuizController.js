@@ -7,12 +7,12 @@ export default class QuizController {
       .then(sendResponse)
       .catch(next);
 
-    function sendResponse(userDoc) {
+    function sendResponse(refId) {
       res.status(201)
         .json({
           status: 201,
           data: {
-            username: userDoc.username
+            refId
           }
         });
     }
@@ -23,7 +23,7 @@ export default class QuizController {
       .then(sendResponse)
       .catch(next);
 
-    function sendResponse(userDoc) {
+    function sendResponse() {
       res.status(200)
         .json({
           status: 200
