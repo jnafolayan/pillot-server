@@ -24,7 +24,7 @@ export default class UserController {
       .catch(next);
 
     function sendResponse(token) {
-      res.status(201)
+      res.status(200)
         .json({
           status: 200,
           data: {
