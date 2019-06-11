@@ -30,8 +30,12 @@ export default class QuestionService {
     }
   }
 
-  static verifyAnswer({ quizId, questionId, answer }) {
-    return QuizService.getQuestion({ quizId, questionId })
-      .then(get)
+  static verifyAnswer({ questionId, answer }) {
+    return Question.find({ refId: questionId })
+      .then(verify);
+
+    function verify(questionDoc) {
+      return questionDoc.answer == answer;
+    }
   }
 }

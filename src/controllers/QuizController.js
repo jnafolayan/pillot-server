@@ -62,45 +62,4 @@ export default class QuizController {
         });
     }
   }
-
-  static getQuestion(req, res, next) {
-    const dto = {
-      quizId: req.params.quizId,
-      questionId: req.params.questionId
-    };
-
-    return QuizService.getQuestion(dto)
-      .then(sendResponse)
-      .catch(next);
-
-    function sendResponse(questionDoc) {
-      res.status(200)
-        .json({
-          status: 200,
-          data: questionDoc
-        });
-    }
-  }
-
-  static verifyAnswer(req, res, next) {
-    const dto = {
-      quizId: req.params.quizId,
-      questionId: req.params.questionId,
-      answer: req.body.answer
-    };
-    
-    return QuizService.verifyAnswer(dto)
-      .then(sendResponse)
-      .catch(next);
-
-    function sendResponse(correct) {
-      res.status(200)
-        .json({
-          status: 200,
-          data: {
-            correct
-          }
-        });
-    }
-  }
 }

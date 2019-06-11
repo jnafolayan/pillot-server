@@ -10,7 +10,4 @@ quizRouter.get('/', QuizController.getAllQuizzes);
 
 quizRouter.get('/:quizId', QuizController.getQuiz);
 
-quizRouter.get('/questions/:questionId', QuizController.getQuestion);
-quizRouter.post('/:quizId/questions/:questionId', QuizController.verifyAnswer);
-
 export default quizRouter;
