@@ -8,7 +8,7 @@ export default function routes() {
   const router = Router();
   
   router.use('/users', userRouter);
-  router.use('/quiz', quizRouter);
+  router.use('/quizzes', quizRouter);
   router.use('/sessions', sessionRouter);
 
   return router;
