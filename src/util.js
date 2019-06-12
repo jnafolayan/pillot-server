@@ -4,6 +4,8 @@ import { jwtSecret } from './config';
 export function createError(status, msg) {
   const error = new Error(msg);
   error.status = status;
+  error.__custom = true;
+  return error;
 }
 
 export function verifyAuth(req, res, next) {
