@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 
+import { jwtSecret } from '../config';
 import { createError } from '../util';
 
 export default class UserService {
@@ -44,7 +45,7 @@ export default class UserService {
     }
 
     function generateToken({ _id }) {
-      const token = jwt.sign({ id: _id }, config.jwtSecret, { expiresIn: '7d' });
+      const token = jwt.sign({ id: _id }, jwtSecret, { expiresIn: '7d' });
       return token;
     }
   }
