@@ -12,7 +12,8 @@ export default class QuizService {
       .then(doc => refId);
   }
 
-  static deleteQuiz({ quizId }) {
-    return Quiz.deleteOne({ refId: quizId });
+  static deleteQuiz({ refId, user }) {
+    const creator = user.id;
+    return Quiz.deleteOne({ creator, refId });
   }
 }

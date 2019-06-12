@@ -19,7 +19,8 @@ export default class QuizController {
   }
 
   static deleteQuiz(req, res, next) {
-    return QuizService.deleteQuiz(req.params)
+    return QuizService.deleteQuiz({ refId: req.params.quizId })
+      .then(console.log)
       .then(sendResponse)
       .catch(next);
 
