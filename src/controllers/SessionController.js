@@ -57,6 +57,27 @@ export default class SessionController {
     }
   }
 
+  static getSessionByQuiz(req, res) {
+    const dto = {
+      quizId: req.body.quizId,
+      user: req.user
+    };
+
+    SessionService.getSessionByQuiz(dto)
+      .then(sendResponse)
+      .catch(next);
+
+    function sendResponse(session) {
+      res.status(200)
+        .json({
+          status: 200,
+          data: {
+            sessionId: session._id
+          }
+        });
+    }
+  }
+
   static getQuestion(req, res, next) {
     const dto = {
       sessionId: req.params.sessionId,

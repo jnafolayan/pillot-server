@@ -6,8 +6,8 @@ const STARTED = 'started';
 const ENDED = 'ended';
 
 export default class SessionService {
-  static createSession({ user, quizId }) {
-    return Session.create({ user: user.id, quiz: quizId });
+  static createSession({ user, quizId: quiz }) {
+    return Session.create({ quiz, user: user.id });
   }
 
   static startSession({ sessionId }) {
@@ -32,8 +32,8 @@ export default class SessionService {
     }
   }
 
-  static endSession({ sessionId }) {
-    return Session.findOne({ _id: sessionId })
+  static endSession({ sessionId: _id }) {
+    return Session.findOne({ _id })
       .then(checkIfSessionExists)
       .then(checkIfSessionIsActive)
       .then(changeStatus);
@@ -58,6 +58,19 @@ export default class SessionService {
     function changeStatus(sessionDoc) {
       sessionDoc.status = ENDED;
       return sessionDoc.save();
+    }
+  }
+
+  static getSessionByQuiz({ user, quizId: quiz }) {
+    return Session.findOne({ quiz, user: user.id })
+      .select('_id')
+      .exec()
+      .then(checkIfSessionExists);
+
+    function checkIfSessionExists(sessionDoc) {
+      if (!sessionDoc)
+        throw createError(404, 'Session not found');
+      return sessionDoc;
     }
   }
 }
