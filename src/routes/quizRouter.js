@@ -4,10 +4,10 @@ import { verifyAuth } from '../util';
 
 const quizRouter = new Router();
 
-quizRouter.post('/', QuizController.createQuiz);
+quizRouter.post('/', verifyAuth, QuizController.createQuiz);
 quizRouter.get('/', QuizController.getAllQuizzes);
 
 quizRouter.get('/:quizId', QuizController.getQuiz);
-quizRouter.delete('/:quizId', QuizController.deleteQuiz);
+quizRouter.delete('/:quizId', verifyAuth, QuizController.deleteQuiz);
 
 export default quizRouter;

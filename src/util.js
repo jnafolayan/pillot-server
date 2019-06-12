@@ -6,7 +6,7 @@ export function createError(status, msg) {
 }
 
 export function verifyAuth(req, res, next) {
-  const tokenBearer = req.headers['Authorization']
+  const tokenBearer = req.headers['Authorization'];
   
   let token;
 
