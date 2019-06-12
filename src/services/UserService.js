@@ -15,7 +15,7 @@ export default class UserService {
     }
 
     function createUser(hash) {
-      const user = new User({
+      return User.create({
         username: username,
         password: hash,
       });
