@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import { jwtSecret } from './config';
 
 export function createError(status, msg) {
@@ -6,7 +7,7 @@ export function createError(status, msg) {
 }
 
 export function verifyAuth(req, res, next) {
-  const tokenBearer = req.headers['Authorization'];
+  const tokenBearer = req.headers['authorization'];
   
   let token;
 
@@ -20,5 +21,6 @@ export function verifyAuth(req, res, next) {
     if (err)
       return next(err);
     req.user = { id: decoded.id };
+    next();
   });
 }

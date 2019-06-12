@@ -11,7 +11,7 @@ export default class SessionService {
   }
 
   static startSession({ sessionId }) {
-    Session.findOne({ _id: sessionId })
+    return Session.findOne({ _id: sessionId })
       .then(checkIfSessionIsPending)
       .then(changeStatus);
 
@@ -33,9 +33,16 @@ export default class SessionService {
   }
 
   static endSession({ sessionId }) {
-    Session.findOne({ _id: sessionId })
+    return Session.findOne({ _id: sessionId })
+      .then(checkIfSessionExists)
       .then(checkIfSessionIsActive)
       .then(changeStatus);
+
+    function checkIfSessionExists(sessionDoc) {
+      if (!sessionDoc)
+        throw createError(404, 'Session not found');
+      return sessionDoc;
+    }
 
     function checkIfSessionIsActive(sessionDoc) {
       switch (sessionDoc.status) {

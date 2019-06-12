@@ -4,7 +4,7 @@ import QuestionService from '../services/QuestionService';
 
 export default class SessionController {
   static createSession(req, res, next) {
-    SessionService.createSession(req.body)
+    SessionService.createSession({ ...req.body, user: req.user })
       .then(sendResponse)
       .catch(next);
 
@@ -30,9 +30,9 @@ export default class SessionController {
       .catch(next);
 
     function sendResponse(session) {
-      res.status(201)
+      res.status(200)
         .json({
-          status: 201,
+          status: 200,
           data: {
             session
           }
@@ -41,7 +41,11 @@ export default class SessionController {
   }
 
   static endSession(req, res, next) {
-    SessionService.endSession(req.body)
+    const dto = {
+      sessionId: req.params.sessionId
+    };
+
+    SessionService.endSession(dto)
       .then(sendResponse)
       .catch(next);
 

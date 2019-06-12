@@ -3,7 +3,7 @@ import QuizService from '../services/QuizService';
 
 export default class QuizController {
   static createQuiz(req, res, next) {
-    QuizService.createQuiz(req.body)
+    QuizService.createQuiz({ ...req.body, user: req.user })
       .then(sendResponse)
       .catch(next);
 
@@ -19,7 +19,7 @@ export default class QuizController {
   }
 
   static deleteQuiz(req, res, next) {
-    return QuizService.deleteQuiz({ refId: req.params.quizId })
+    return QuizService.deleteQuiz({ refId: req.params.quizId, user: req.user })
       .then(console.log)
       .then(sendResponse)
       .catch(next);
