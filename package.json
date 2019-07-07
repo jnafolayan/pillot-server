@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
-    "db": "babel-node resetdb.js"
+    "build": "babel src --out-dir dist"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

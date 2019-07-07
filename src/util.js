@@ -12,7 +12,8 @@ export function createError(status, msg) {
 export function checkRequestErrors(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(createError(422, errors.array().shift()));
+    const err = errors.array().shift();
+    return next(createError(422, `${err.param}: ${err.msg}`));
   }
   next();
 }
