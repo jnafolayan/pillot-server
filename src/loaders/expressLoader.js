@@ -4,6 +4,8 @@ import routes from '../routes';
 import { createError } from '../util';
 
 export default async function loadExpressPackages(app, config) {
+  // enable pre-flight requests
+  app.options('*', cors());
   app.use(cors());
   app.use(bodyParser.json());
 
