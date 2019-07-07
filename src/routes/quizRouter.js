@@ -1,10 +1,18 @@
 import { Router } from 'express';
+import { check } from 'express-validator';
 import QuizController from '../controllers/QuizController';
-import { verifyAuth, appendUser } from '../util';
+import { verifyAuth, checkRequestErrors, appendUser } from '../util';
 
 const quizRouter = new Router();
 
-quizRouter.post('/', verifyAuth, QuizController.createQuiz);
+const quizCreationCheck = [
+  check('title').isString(), 
+  check('description').isString(), 
+  check('questions').isArray(), 
+  check('backdrop').isString()
+];
+
+quizRouter.post('/', quizCreationCheck, checkRequestErrors, verifyAuth, QuizController.createQuiz);
 quizRouter.get('/', QuizController.getAllQuizzes);
 
 quizRouter.get('/:quizId', appendUser, QuizController.getQuiz);

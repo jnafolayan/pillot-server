@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { validationResult } from 'express-validator';
 import { jwtSecret } from './config';
 
 export function createError(status, msg) {
@@ -6,6 +7,14 @@ export function createError(status, msg) {
   error.status = status;
   error.__custom = true;
   return error;
+}
+
+export function checkRequestErrors(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(createError(422, errors.array().shift()));
+  }
+  next();
 }
 
 export function verifyAuth(req, res, next) {
