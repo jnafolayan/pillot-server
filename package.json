@@ -9,9 +9,11 @@
   "private": false,
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "postinstall": "npm run build"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5"
