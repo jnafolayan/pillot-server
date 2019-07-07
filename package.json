@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "start": "node dist/app.js",
     "dev": "nodemon --exec babel-node src/app.js",
     "build": "babel src --out-dir dist",
     "postinstall": "npm run build"
