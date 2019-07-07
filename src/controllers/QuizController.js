@@ -41,20 +41,18 @@ export default class QuizController {
     }
 
     return Quiz.find(query)
-      .select('refId title description questions creator backdrop')
-      .populate('creator')
+      .select('refId title description questions backdrop')
       .exec()
       .then(sendResponse)
       .catch(next);
 
     function sendResponse(docs) {
-      docs = docs.map(({ refId, title, description, questions, creator, backdrop }) => {
+      docs = docs.map(({ refId, title, description, questions, backdrop }) => {
         return {
           refId,
           title,
           description,
           backdrop,
-          creator: creator.username,
           questionCount: questions.length
         }
       });
