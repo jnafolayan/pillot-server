@@ -5,3 +5,4 @@ export default async function loadMongoDB(app, config) {
     useNewUrlParser: true
   });
 }
+  

@@ -1,7 +1,10 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import routes from '../routes';
+import { createError } from '../util';
 
 export default async function loadExpressPackages(app, config) {
+  app.use(cors());
   app.use(bodyParser.json());
 
   app.use(routes());

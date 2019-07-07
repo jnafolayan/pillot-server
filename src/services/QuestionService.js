@@ -4,11 +4,25 @@ import Question from '../models/Question';
 import { createError } from '../util';
 
 export default class QuestionService {
-  static createQuestion({ text, options }) {
+  static createQuestion({ text, options, answer }) {
     const refId = uuidv1().split('-').shift();
     
-    return Question.create({ text, options, refId })
+    return Question.create({ text, options, answer, refId })
       .then(doc => refId);
+  }
+
+  static createMany(questions) {
+    questions = questions.map(({ text, options, answer }) => {
+      const refId = uuidv1().split('-').shift();
+      return {
+        refId,
+        text,
+        options,
+        answer
+      };
+    });
+
+    return Question.create(questions);
   }
 
   static deleteQuestion({ refId }) {
@@ -31,7 +45,7 @@ export default class QuestionService {
   }
 
   static verifyAnswer({ questionId, answer }) {
-    return Question.find({ refId: questionId })
+    return Question.findOne({ refId: questionId })
       .then(verify);
 
     function verify(questionDoc) {

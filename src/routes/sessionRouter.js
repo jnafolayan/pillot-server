@@ -5,9 +5,9 @@ import { verifyAuth } from '../util';
 const sessionRouter = new Router();
 
 sessionRouter.post('/', verifyAuth, SessionController.createSession);
-sessionRouter.post('/:sessionId/start', verifyAuth, SessionController.startSession);
 sessionRouter.post('/:sessionId/end', verifyAuth, SessionController.endSession);
 
-sessionRouter.get('/:sessionId/questions/:questionId', verifyAuth, SessionController.getQuestion);
+sessionRouter.get('/:sessionId', verifyAuth, SessionController.getSession);
+sessionRouter.post('/:sessionId/answer', verifyAuth, SessionController.recordAnswer);
 
 export default sessionRouter;

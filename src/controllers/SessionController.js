@@ -13,28 +13,7 @@ export default class SessionController {
         .json({
           status: 201,
           data: {
-            session
-          }
-        });
-    }
-  
-  }
-
-  static startSession(req, res, next) {
-    const dto = {
-      sessionId: req.params.sessionId
-    };
-
-    SessionService.startSession(dto)
-      .then(sendResponse)
-      .catch(next);
-
-    function sendResponse(session) {
-      res.status(200)
-        .json({
-          status: 200,
-          data: {
-            session
+            sessionId: session._id
           }
         });
     }
@@ -57,65 +36,66 @@ export default class SessionController {
     }
   }
 
-  static getSessionByQuiz(req, res) {
-    const dto = {
-      quizId: req.body.quizId,
-      user: req.user
-    };
+  static getSession(req, res, next) {
+    const dto = { 
+      user: req.user,
+      sessionId: req.params.sessionId 
+    }; 
 
-    SessionService.getSessionByQuiz(dto)
+    return SessionService.getSession(dto)
       .then(sendResponse)
       .catch(next);
 
     function sendResponse(session) {
+      delete session.sessionDoc;
+      
       res.status(200)
         .json({
           status: 200,
-          data: {
-            sessionId: session._id
-          }
+          data: { ...session }
         });
     }
   }
 
-  static getQuestion(req, res, next) {
+  static recordAnswer(req, res, next) {
     const dto = {
-      sessionId: req.params.sessionId,
-      quizId: req.params.quizId,
-      questionId: req.params.questionId
-    };
-
-    return QuestionService.getQuestion(dto)
-      .then(sendResponse)
-      .catch(next);
-
-    function sendResponse(questionDoc) {
-      res.status(200)
-        .json({
-          status: 200,
-          data: questionDoc
-        });
-    }
-  }
-
-  static verifyAnswer(req, res, next) {
-    const dto = {
-      quizId: req.params.quizId,
-      questionId: req.params.questionId,
+      questionId: req.body.questionId,
       answer: req.body.answer
     };
-    
+
     return QuestionService.verifyAnswer(dto)
+      .then(updateSession)
       .then(sendResponse)
       .catch(next);
 
-    function sendResponse(correct) {
+    function updateSession(correct) {
+      return SessionService.getSession({ user: req.user, sessionId: req.params.sessionId })
+        .then(recordQuestion)
+        .then(saveSession);
+
+      function recordQuestion({ sessionDoc, questionCount, question }) {
+        sessionDoc.questions.push({
+          correct,
+          questionId: question.refId
+        });
+
+        sessionDoc.cursor += 1;
+        if (sessionDoc.cursor == questionCount)
+          sessionDoc.status = Session.ENDED;
+
+        return sessionDoc;
+      }
+
+      function saveSession(sessionDoc) {
+        return sessionDoc.save();
+      }
+    }
+
+    function sendResponse(sessionDoc) {
       res.status(200)
         .json({
           status: 200,
-          data: {
-            correct
-          }
+          data: null
         });
     }
   }

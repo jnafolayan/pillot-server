@@ -7,7 +7,18 @@ const QuizSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   questions: [{ type: ObjectId, ref: 'Question' }],
-  creator: { type: ObjectId, ref: 'User' }
+  creator: { type: ObjectId, ref: 'User', required: true },
+  backdrop: { type: String, required: true }
+});
+
+QuizSchema.index({
+  title: 'text',
+  description: 'text'
+}, {
+  weights: {
+    name: 3,
+    description: 1
+  }
 });
 
 export default mongoose.model('Quiz', QuizSchema);

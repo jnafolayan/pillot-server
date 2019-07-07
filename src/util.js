@@ -26,3 +26,22 @@ export function verifyAuth(req, res, next) {
     next();
   });
 }
+
+export function appendUser(req, res, next) {
+  const tokenBearer = req.headers['authorization'];
+  
+  let token;
+
+  try {
+    token = tokenBearer.split(' ')[1];
+  } catch (error) {
+    return next();
+  }
+
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err)
+      return next();
+    req.user = { id: decoded.id };
+    next();
+  });
+}
